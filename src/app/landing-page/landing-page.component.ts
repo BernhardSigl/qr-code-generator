@@ -29,7 +29,7 @@ export class LandingPageComponent {
     this.inputFieldText = input.value;
 
     if (this.inputFieldText === '') {
-      console.log('Nothing is gonna happen');
+      console.log('Field is empty');
     } else {
       const code_url = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${this.inputFieldText}`;
       img.src = code_url;
@@ -79,8 +79,10 @@ export class LandingPageComponent {
     };
   }
 
-  clear() {
+  async clear() {
     const input = this.qrCodeInputField.nativeElement;
+    input.value = 'Example';
+    await this.generate();
     input.value = '';
     this.inputFieldText = '';
   }
