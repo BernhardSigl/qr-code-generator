@@ -1,7 +1,7 @@
 # QR-Code Generator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
-Check it out: qr-code.bernhard-sigl.com
+Check it out: [qr-code.bernhard-sigl.com](https://qr-code.bernhard-sigl.com/)
 
 ## Development server
 
