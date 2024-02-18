@@ -20,7 +20,7 @@
   <mat-card-actions>
     <div class="btn-group" role="group" aria-label="Basic outlined example">
       <button type="button" class="btn btn-outline-secondary" #clearBtn (click)="clear()" [disabled]="isInputEmpty()">Clear</button>
-      <button type="button" class="btn btn-outline-secondary" #generateBtn (click)="generate()">Generate</button>
+      <button type="button" class="btn btn-outline-secondary" #generateBtn (click)="generate()" [disabled]="isInputEmpty()">Generate</button>
       <button type="button" class="btn btn-outline-secondary" id="download-btn" (click)="downloadQR()" [disabled]="isInputEmpty()">Download</button>
     </div>
   </mat-card-actions>
