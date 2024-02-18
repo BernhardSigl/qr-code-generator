@@ -1,9 +1,8 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { log } from 'console';
 
 @Component({
   selector: 'app-landing-page',
@@ -20,7 +19,7 @@ export class LandingPageComponent {
   @ViewChild('overallBox') overallBox!: ElementRef;
 
   inputFieldText: string = '';
-
+  // ${this.inputFieldText}
   generate(): Promise<void> {
     return new Promise<void>((resolve) => {
     const input = this.qrCodeInputField.nativeElement;
@@ -40,45 +39,28 @@ export class LandingPageComponent {
 
   async downloadQR() {
     await this.generate();
-    const tempImg = new Image();
-    tempImg.crossOrigin = 'Anonymous';
-    tempImg.src = this.qrCodeImg.nativeElement.src;
-
-    tempImg.onload = () => {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      if (context) {
-        canvas.width = tempImg.width;
-        canvas.height = tempImg.height;
-
-        context.drawImage(tempImg, 0, 0, tempImg.width, tempImg.height);
-
-        const imageData = context.getImageData(
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        );
-        const data = imageData.data;
-
-        for (let i = 0; i < data.length; i += 4) {
-          const red = data[i];
-          const green = data[i + 1];
-          const blue = data[i + 2];
-          if (red === 255 && green === 255 && blue === 255) {
-            data[i + 3] = 0;
-          }
-        }
-
-        context.putImageData(imageData, 0, 0);
-        const link = document.createElement('a');
-        link.download = `qr_code_${this.inputFieldText}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      }
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = (event: Event) => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      context?.drawImage(img, 0, 0);
+      const url = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `qr_code_${this.inputFieldText}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     };
+    img.src = this.qrCodeImg.nativeElement.src;
+    if (this.qrCodeImg.nativeElement.complete) {
+      img.onload(new Event('load'));
+    }
   }
-
+  
   async clear() {
     const input = this.qrCodeInputField.nativeElement;
     input.value = 'Example';
