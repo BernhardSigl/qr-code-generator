@@ -14,14 +14,14 @@
   <mat-card-content>
     <div class="input-group mb-3">
       <span class="input-group-text" id="inputGroup-sizing-default">Link</span>
-      <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" #qrCodeInputField>
+      <input (input)="isInputEmpty()" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" #qrCodeInputField>
     </div>
   </mat-card-content>
   <mat-card-actions>
     <div class="btn-group" role="group" aria-label="Basic outlined example">
-      <button type="button" class="btn btn-outline-secondary" #clearBtn (click)="clear()">Clear</button>
+      <button type="button" class="btn btn-outline-secondary" #clearBtn (click)="clear()" [disabled]="isInputEmpty()">Clear</button>
       <button type="button" class="btn btn-outline-secondary" #generateBtn (click)="generate()">Generate</button>
-      <button type="button" class="btn btn-outline-secondary" id="download-btn" (click)="downloadQR()">Download</button>
+      <button type="button" class="btn btn-outline-secondary" id="download-btn" (click)="downloadQR()" [disabled]="isInputEmpty()">Download</button>
     </div>
   </mat-card-actions>
 </mat-card>

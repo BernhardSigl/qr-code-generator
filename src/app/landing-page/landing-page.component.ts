@@ -68,4 +68,13 @@ export class LandingPageComponent {
     input.value = '';
     this.inputFieldText = '';
   }
+
+  isInputEmpty(): boolean {
+    if (this.qrCodeInputField && this.qrCodeInputField.nativeElement) {
+      const input = this.qrCodeInputField.nativeElement;
+      return input.value.trim() === '';
+    }
+    return true;
+  }
+  
 }
